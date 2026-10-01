@@ -3,6 +3,14 @@
 Todas as mudanças relevantes deste projeto são documentadas aqui.
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e versionamento [SemVer](https://semver.org/lang/pt-BR/).
 
+## [0.2.0] - 2026-09-30
+
+### Added
+- Design system em `css/variables.css`: paleta, escala tipográfica 1.25, espaçamentos de 8px e temas claro, escuro e alto contraste.
+- Suporte a `prefers-color-scheme`, `prefers-contrast` e `forced-colors`.
+- Grid de 12 colunas mobile-first (breakpoints 576, 768, 992, 1200 e 1400px) e Flexbox em header, cards e footer.
+- Componentes iniciais: botões, cards, badges e barra de progresso.
+
 ## [0.1.0] - 2026-09-30
 
 ### Added
