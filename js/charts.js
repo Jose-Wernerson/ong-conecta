@@ -13,10 +13,19 @@ export function destruirGrafico() {
   grafico = null;
 }
 
-/** Desenha o gráfico de barras de arrecadação por projeto no <canvas> informado. */
+/**
+ * Desenha o gráfico de barras de arrecadação por projeto no <canvas> informado.
+ * Devolve false quando o CDN não puder ser carregado (o chamador mostra a tabela).
+ */
 export async function renderizarGrafico(canvas, projetos) {
   destruirGrafico();
-  const { default: Chart } = await import(/* @vite-ignore */ CHART_URL);
+  let Chart;
+  try {
+    ({ default: Chart } = await import(/* @vite-ignore */ CHART_URL));
+  } catch (erro) {
+    console.warn("Chart.js indisponível, exibindo tabela de dados.", erro);
+    return false;
+  }
 
   const estilo = getComputedStyle(document.documentElement);
   const cor = (nome) => estilo.getPropertyValue(nome).trim();
@@ -42,6 +51,7 @@ export async function renderizarGrafico(canvas, projetos) {
       },
     },
   });
+  return true;
 }
 
 /* ---------- Day.js (pt-br) ---------- */
@@ -50,22 +60,30 @@ let dayjsPronto = null;
 
 export function carregarDayjs() {
   dayjsPronto ??= (async () => {
-    const [{ default: dayjs }, { default: ptBr }] = await Promise.all([
-      import(/* @vite-ignore */ DAYJS_URL),
-      import(/* @vite-ignore */ DAYJS_PTBR_URL),
-    ]);
-    dayjs.locale(ptBr);
-    return dayjs;
+    try {
+      const [{ default: dayjs }, { default: ptBr }] = await Promise.all([
+        import(/* @vite-ignore */ DAYJS_URL),
+        import(/* @vite-ignore */ DAYJS_PTBR_URL),
+      ]);
+      dayjs.locale(ptBr);
+      return dayjs;
+    } catch (erro) {
+      console.warn("Day.js indisponível, mantendo datas nativas.", erro);
+      dayjsPronto = null;
+      return null;
+    }
   })();
   return dayjsPronto;
 }
 
+/** Devolve a data por extenso em pt-br, ou null se o Day.js não puder ser carregado. */
 export async function formatarData(iso) {
   const dayjs = await carregarDayjs();
-  return dayjs(iso).format("D [de] MMMM [de] YYYY");
+  return dayjs ? dayjs(iso).format("D [de] MMMM [de] YYYY") : null;
 }
 
+/** Devolve a idade em anos, ou null se o Day.js não puder ser carregado. */
 export async function idadeEmAnos(nascimento) {
   const dayjs = await carregarDayjs();
-  return dayjs().diff(dayjs(nascimento), "year");
+  return dayjs ? dayjs().diff(dayjs(nascimento), "year") : null;
 }
