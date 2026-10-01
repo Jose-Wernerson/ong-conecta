@@ -9,7 +9,18 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700&display=swap">
+  <script>
+    (function () {
+      var d = document.documentElement;
+      d.classList.add('js');
+      try {
+        var p = JSON.parse(localStorage.getItem('ong:preferencias') || '{}');
+        if (p.tema) d.setAttribute('data-theme', p.tema);
+      } catch (e) { /* sem localStorage */ }
+    })();
+  </script>
   <link rel="stylesheet" href="../css/style.css">
+  <script type="module" src="../js/ui.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#app">Pular para o conteúdo</a>
@@ -17,6 +28,15 @@
     <a class="brand" href="../index.html">
       <img src="../public/imagens/logo/logo.svg" width="160" height="40" alt="ONG Conecta">
     </a>
+    <div class="theme-switch" role="group" aria-label="Tema da página">
+      <button type="button" class="btn btn--outline btn--sm" data-action="set-theme" data-theme-value="light" aria-pressed="true">Claro</button>
+      <button type="button" class="btn btn--outline btn--sm" data-action="set-theme" data-theme-value="dark" aria-pressed="false">Escuro</button>
+      <button type="button" class="btn btn--outline btn--sm" data-action="set-theme" data-theme-value="contrast" aria-pressed="false">Contraste</button>
+    </div>
+    <button type="button" class="menu-toggle" data-action="toggle-menu" aria-expanded="false" aria-controls="menu-principal">
+      <span class="menu-toggle__bars" aria-hidden="true"></span>
+      <span class="sr-only">Abrir menu</span>
+    </button>
     <nav id="menu-principal" class="nav" aria-label="Menu principal">
       <ul class="menu">
         <li><a href="../index.html">Início</a></li>
@@ -70,5 +90,8 @@
     <p>&copy; 2026 ONG Conecta. Projeto acadêmico de José Wernerson.</p>
     <p><a href="https://www.linkedin.com/in/jose-wernerson">LinkedIn</a></p>
   </footer>
+
+  <div id="toasts" class="toasts" aria-live="polite" aria-atomic="false"></div>
+  <div id="modal-root"></div>
 </body>
 </html>

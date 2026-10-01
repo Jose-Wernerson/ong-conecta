@@ -3,6 +3,14 @@
 Todas as mudanças relevantes deste projeto são documentadas aqui.
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e versionamento [SemVer](https://semver.org/lang/pt-BR/).
 
+## [0.3.0] - 2026-09-30
+
+### Added
+- Menu hambúrguer (`aria-expanded`/`aria-controls`) que vira horizontal em 992px, com submenu dropdown via `:hover` e `:focus-within`.
+- Formulários com `fieldset`, `:user-valid`/`:user-invalid` e mensagens de erro ligadas por `aria-describedby`.
+- Alertas, toasts (`aria-live="polite"`) e modal (`role="dialog"`, `aria-modal`, focus trap e Esc).
+- Seletor de tema com `aria-pressed`, preferência salva em `localStorage` e aplicada no `<head>` antes da renderização.
+
 ## [0.2.0] - 2026-09-30
 
 ### Added
