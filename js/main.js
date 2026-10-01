@@ -50,9 +50,6 @@ function aoEnviar(e) {
 }
 
 function montarFormulario(app) {
-  ligarValidacao(app);
-  app.addEventListener("submit", (e) => aoEnviar(e));
-
   const cadastro = app.querySelector("#form-cadastro");
   if (cadastro) {
     let temporizador;
@@ -127,4 +124,9 @@ registerAction("descartar-rascunho", () => {
   window.dispatchEvent(new CustomEvent("dados:alterados"));
 });
 
-iniciarRouter(document.getElementById("app"));
+/* Delegação: os listeners ficam no #app (que nunca é recriado) e são ligados uma única vez */
+const app = document.getElementById("app");
+ligarValidacao(app);
+app.addEventListener("submit", aoEnviar);
+
+iniciarRouter(app);
