@@ -31,12 +31,17 @@ function aoEnviar(e) {
   const form = e.target.closest("form[data-form]");
   if (!form) return;
   e.preventDefault();
+  if (form.dataset.enviando) return;
 
   const { valido } = validarFormulario(form);
   if (!valido) {
     showToast("Corrija os campos destacados antes de enviar.", "error");
     return;
   }
+
+  form.dataset.enviando = "true";
+  const botao = form.querySelector('button[type="submit"]');
+  botao.disabled = true;
 
   const dados = coletarDados(form);
   if (form.dataset.form === "cadastro") {
@@ -47,6 +52,11 @@ function aoEnviar(e) {
   }
   form.reset();
   form.querySelectorAll("[data-tocado]").forEach((campo) => delete campo.dataset.tocado);
+
+  setTimeout(() => {
+    delete form.dataset.enviando;
+    botao.disabled = false;
+  }, 800);
 }
 
 function montarFormulario(app) {
