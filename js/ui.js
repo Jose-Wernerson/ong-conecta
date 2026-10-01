@@ -132,6 +132,13 @@ function prenderFoco(e) {
 
 /* ---------- Eventos ---------- */
 
+const acoes = new Map();
+
+/** Permite que outros módulos registrem ações data-action sem acoplar ao ui.js. */
+export function registerAction(nome, fn) {
+  acoes.set(nome, fn);
+}
+
 function onClick(e) {
   const alvo = e.target.closest("[data-action]");
   if (!alvo) return;
@@ -143,6 +150,7 @@ function onClick(e) {
       setTheme(alvo.dataset.themeValue);
       break;
     default:
+      acoes.get(alvo.dataset.action)?.(alvo, e);
   }
 }
 
