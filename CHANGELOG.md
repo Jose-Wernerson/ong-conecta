@@ -3,6 +3,12 @@
 Todas as mudanças relevantes deste projeto são documentadas aqui.
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e versionamento [SemVer](https://semver.org/lang/pt-BR/).
 
+## [1.1.1] - 2026-09-30
+
+### Fixed
+- Os listeners de `submit` e de validação eram religados a cada renderização de rota, o que gerava toasts de erro indevidos e risco de envio duplicado. Agora são ligados uma única vez por delegação de eventos em `#app`.
+- Envios repetidos enquanto um cadastro/doação está sendo processado são ignorados (botão desabilitado e flag `data-enviando`).
+
 ## [1.1.0] - 2026-09-30
 
 ### Added
