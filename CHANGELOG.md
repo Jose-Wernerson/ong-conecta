@@ -3,6 +3,14 @@
 Todas as mudanças relevantes deste projeto são documentadas aqui.
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e versionamento [SemVer](https://semver.org/lang/pt-BR/).
 
+## [1.1.0] - 2026-09-30
+
+### Added
+- `js/validation.js`: regras `obrigatorio`, `email`, `cpf` (dígitos verificadores), `telefone` (com máscara), `idade >= 16` e `valorMinimo` de R$ 5; validação no `blur`, no `input` e no `submit`, com foco no primeiro erro e `aria-invalid`/`aria-describedby`.
+- `js/storage.js`: único acesso ao `localStorage`, chaves com prefixo `ong:` (voluntarios, doacoes, rascunho, preferencias), `JSON.parse`/`stringify` com `try/catch` e evento `CustomEvent("doacao:salva")`.
+- Tela "Meus cadastros" (`#/meus-cadastros`) com listagem e remoção dos registros salvos.
+- Rascunho automático do cadastro de voluntário.
+
 ## [1.0.0] - 2026-09-30
 
 ### Changed
