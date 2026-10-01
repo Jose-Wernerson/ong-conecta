@@ -9,7 +9,18 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700&display=swap">
+  <script>
+    (function () {
+      var d = document.documentElement;
+      d.classList.add('js');
+      try {
+        var p = JSON.parse(localStorage.getItem('ong:preferencias') || '{}');
+        if (p.tema) d.setAttribute('data-theme', p.tema);
+      } catch (e) { /* sem localStorage */ }
+    })();
+  </script>
   <link rel="stylesheet" href="../css/style.css">
+  <script type="module" src="../js/ui.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#app">Pular para o conteúdo</a>
@@ -17,6 +28,15 @@
     <a class="brand" href="../index.html">
       <img src="../public/imagens/logo/logo.svg" width="160" height="40" alt="ONG Conecta">
     </a>
+    <div class="theme-switch" role="group" aria-label="Tema da página">
+      <button type="button" class="btn btn--outline btn--sm" data-action="set-theme" data-theme-value="light" aria-pressed="true">Claro</button>
+      <button type="button" class="btn btn--outline btn--sm" data-action="set-theme" data-theme-value="dark" aria-pressed="false">Escuro</button>
+      <button type="button" class="btn btn--outline btn--sm" data-action="set-theme" data-theme-value="contrast" aria-pressed="false">Contraste</button>
+    </div>
+    <button type="button" class="menu-toggle" data-action="toggle-menu" aria-expanded="false" aria-controls="menu-principal">
+      <span class="menu-toggle__bars" aria-hidden="true"></span>
+      <span class="sr-only">Abrir menu</span>
+    </button>
     <nav id="menu-principal" class="nav" aria-label="Menu principal">
       <ul class="menu">
         <li><a href="../index.html">Início</a></li>
@@ -35,32 +55,52 @@
   <main id="app" tabindex="-1">
     <h1>Seja voluntário</h1>
     <p>Preencha os dados abaixo. Esta é a versão sem JavaScript, com validação nativa do navegador.</p>
-    <form action="#" method="post">
+    <form action="#" method="post" data-demo="Cadastro recebido! (demonstração)">
       <fieldset>
         <legend>Dados pessoais</legend>
-        <p><label for="nome">Nome completo</label><br>
-        <input type="text" id="nome" name="nome" required autocomplete="name"></p>
-        <p><label for="email">E-mail</label><br>
-        <input type="email" id="email" name="email" required autocomplete="email"></p>
-        <p><label for="cpf">CPF</label><br>
-        <input type="text" id="cpf" name="cpf" required inputmode="numeric" maxlength="14" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" title="Formato: 000.000.000-00" placeholder="000.000.000-00"></p>
-        <p><label for="telefone">Telefone</label><br>
-        <input type="tel" id="telefone" name="telefone" required autocomplete="tel" maxlength="15" pattern="\(\d{2}\) \d{4,5}-\d{4}" title="Formato: (11) 91234-5678" placeholder="(11) 91234-5678"></p>
-        <p><label for="nascimento">Data de nascimento (mínimo 16 anos)</label><br>
-        <input type="date" id="nascimento" name="nascimento" required></p>
+        <div class="field">
+          <label for="nome">Nome completo</label>
+          <input type="text" id="nome" name="nome" required autocomplete="name" aria-describedby="nome-erro">
+          <p id="nome-erro" class="field__error"></p>
+        </div>
+        <div class="field">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" required autocomplete="email" aria-describedby="email-erro">
+          <p id="email-erro" class="field__error"></p>
+        </div>
+        <div class="form__row">
+        <div class="field">
+          <label for="cpf">CPF</label>
+          <input type="text" id="cpf" name="cpf" required inputmode="numeric" maxlength="14" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" title="Formato: 000.000.000-00" placeholder="000.000.000-00" aria-describedby="cpf-erro">
+          <p id="cpf-erro" class="field__error"></p>
+        </div>
+        <div class="field">
+          <label for="telefone">Telefone</label>
+          <input type="tel" id="telefone" name="telefone" required autocomplete="tel" maxlength="15" pattern="\(\d{2}\) \d{4,5}-\d{4}" title="Formato: (11) 91234-5678" placeholder="(11) 91234-5678" aria-describedby="telefone-erro">
+          <p id="telefone-erro" class="field__error"></p>
+        </div>
+        </div>
+        <div class="field">
+          <label for="nascimento">Data de nascimento (mínimo 16 anos)</label>
+          <input type="date" id="nascimento" name="nascimento" required aria-describedby="nascimento-erro">
+          <p id="nascimento-erro" class="field__error"></p>
+        </div>
       </fieldset>
       <fieldset>
         <legend>Participação</legend>
-        <p><label for="projeto">Projeto</label><br>
-        <select id="projeto" name="projeto" required>
-          <option value="">Selecione…</option>
-          <option value="educacao">Semear Saber (Educação)</option>
-          <option value="alimentacao">Mesa Cheia (Alimentação)</option>
-          <option value="saude">Saúde na Praça (Saúde)</option>
-        </select></p>
-        <p><label><input type="checkbox" name="termos" required> Aceito receber contato da ONG.</label></p>
+        <div class="field">
+          <label for="projeto">Projeto</label>
+          <select id="projeto" name="projeto" required aria-describedby="projeto-erro">
+            <option value="">Selecione…</option>
+            <option value="educacao">Semear Saber (Educação)</option>
+            <option value="alimentacao">Mesa Cheia (Alimentação)</option>
+            <option value="saude">Saúde na Praça (Saúde)</option>
+          </select>
+          <p id="projeto-erro" class="field__error"></p>
+        </div>
+        <label class="check"><input type="checkbox" name="termos" required> Aceito receber contato da ONG.</label>
       </fieldset>
-      <p><button class="btn" type="submit">Enviar cadastro</button></p>
+      <div class="btn-group"><button class="btn" type="submit">Enviar cadastro</button></div>
     </form>
   </main>
 
@@ -68,5 +108,8 @@
     <p>&copy; 2026 ONG Conecta. Projeto acadêmico de José Wernerson.</p>
     <p><a href="https://www.linkedin.com/in/jose-wernerson">LinkedIn</a></p>
   </footer>
+
+  <div id="toasts" class="toasts" aria-live="polite" aria-atomic="false"></div>
+  <div id="modal-root"></div>
 </body>
 </html>
