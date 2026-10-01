@@ -459,3 +459,23 @@ select:user-invalid,
 .section > h2 { margin-bottom: var(--space-4); }
 
 .noscript-aviso { margin: var(--space-3); }
+
+/* Gráfico e detalhes */
+.grafico {
+  margin: var(--space-4) 0;
+  padding: var(--space-3);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.grafico canvas { max-height: 22rem; }
+
+.grafico figcaption {
+  margin-top: var(--space-2);
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+
+details { margin-top: var(--space-3); }
+summary { cursor: pointer; font-weight: 600; }
