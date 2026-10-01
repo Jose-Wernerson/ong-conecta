@@ -9,7 +9,18 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700&display=swap">
+  <script>
+    (function () {
+      var d = document.documentElement;
+      d.classList.add('js');
+      try {
+        var p = JSON.parse(localStorage.getItem('ong:preferencias') || '{}');
+        if (p.tema) d.setAttribute('data-theme', p.tema);
+      } catch (e) { /* sem localStorage */ }
+    })();
+  </script>
   <link rel="stylesheet" href="../css/style.css">
+  <script type="module" src="../js/ui.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#app">Pular para o conteúdo</a>
@@ -17,6 +28,15 @@
     <a class="brand" href="../index.html">
       <img src="../public/imagens/logo/logo.svg" width="160" height="40" alt="ONG Conecta">
     </a>
+    <div class="theme-switch" role="group" aria-label="Tema da página">
+      <button type="button" class="btn btn--outline btn--sm" data-action="set-theme" data-theme-value="light" aria-pressed="true">Claro</button>
+      <button type="button" class="btn btn--outline btn--sm" data-action="set-theme" data-theme-value="dark" aria-pressed="false">Escuro</button>
+      <button type="button" class="btn btn--outline btn--sm" data-action="set-theme" data-theme-value="contrast" aria-pressed="false">Contraste</button>
+    </div>
+    <button type="button" class="menu-toggle" data-action="toggle-menu" aria-expanded="false" aria-controls="menu-principal">
+      <span class="menu-toggle__bars" aria-hidden="true"></span>
+      <span class="sr-only">Abrir menu</span>
+    </button>
     <nav id="menu-principal" class="nav" aria-label="Menu principal">
       <ul class="menu">
         <li><a href="../index.html">Início</a></li>
@@ -35,30 +55,44 @@
   <main id="app" tabindex="-1">
     <h1>Faça uma doação</h1>
     <p>Qualquer valor ajuda. Doação mínima de R$ 5,00.</p>
-    <form action="#" method="post">
+    <form action="#" method="post" data-demo="Doação recebida! Obrigado. (demonstração)">
       <fieldset>
         <legend>Dados da doação</legend>
-        <p><label for="nome">Nome</label><br>
-        <input type="text" id="nome" name="nome" required autocomplete="name"></p>
-        <p><label for="email">E-mail</label><br>
-        <input type="email" id="email" name="email" required autocomplete="email"></p>
-        <p><label for="valor">Valor (R$)</label><br>
-        <input type="number" id="valor" name="valor" required min="5" step="0.01" inputmode="decimal"></p>
-        <p><label for="projeto">Projeto</label><br>
-        <select id="projeto" name="projeto" required>
-          <option value="">Selecione…</option>
-          <option value="educacao">Semear Saber (Educação)</option>
-          <option value="alimentacao">Mesa Cheia (Alimentação)</option>
-          <option value="saude">Saúde na Praça (Saúde)</option>
-        </select></p>
+        <div class="field">
+          <label for="nome">Nome</label>
+          <input type="text" id="nome" name="nome" required autocomplete="name" aria-describedby="nome-erro">
+          <p id="nome-erro" class="field__error"></p>
+        </div>
+        <div class="field">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" required autocomplete="email" aria-describedby="email-erro">
+          <p id="email-erro" class="field__error"></p>
+        </div>
+        <div class="form__row">
+        <div class="field">
+          <label for="valor">Valor (R$)</label>
+          <input type="number" id="valor" name="valor" required min="5" step="0.01" inputmode="decimal" aria-describedby="valor-erro">
+          <p id="valor-erro" class="field__error"></p>
+        </div>
+        <div class="field">
+          <label for="projeto">Projeto</label>
+          <select id="projeto" name="projeto" required aria-describedby="projeto-erro">
+            <option value="">Selecione…</option>
+            <option value="educacao">Semear Saber (Educação)</option>
+            <option value="alimentacao">Mesa Cheia (Alimentação)</option>
+            <option value="saude">Saúde na Praça (Saúde)</option>
+          </select>
+          <p id="projeto-erro" class="field__error"></p>
+        </div>
+        </div>
       </fieldset>
       <fieldset>
         <legend>Forma de pagamento</legend>
-        <p><label><input type="radio" name="pagamento" value="pix" required> Pix</label></p>
-        <p><label><input type="radio" name="pagamento" value="cartao"> Cartão de crédito</label></p>
-        <p><label><input type="radio" name="pagamento" value="boleto"> Boleto</label></p>
+        <label class="check"><input type="radio" name="pagamento" value="pix" required> Pix</label>
+        <label class="check"><input type="radio" name="pagamento" value="cartao"> Cartão de crédito</label>
+        <label class="check"><input type="radio" name="pagamento" value="boleto"> Boleto</label>
       </fieldset>
-      <p><button class="btn" type="submit">Confirmar doação</button></p>
+      <div class="btn-group"><button class="btn" type="submit">Confirmar doação</button></div>
     </form>
   </main>
 
@@ -66,5 +100,8 @@
     <p>&copy; 2026 ONG Conecta. Projeto acadêmico de José Wernerson.</p>
     <p><a href="https://www.linkedin.com/in/jose-wernerson">LinkedIn</a></p>
   </footer>
+
+  <div id="toasts" class="toasts" aria-live="polite" aria-atomic="false"></div>
+  <div id="modal-root"></div>
 </body>
 </html>
