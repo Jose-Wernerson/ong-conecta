@@ -91,7 +91,14 @@ registrarRota("/doacao", {
 registrarRota("/transparencia", {
   titulo: "Transparência",
   view: t.transparencia,
-  mount: (app) => renderizarGrafico(app.querySelector("#grafico-arrecadacao"), projetos),
+  mount: async (app) => {
+    const ok = await renderizarGrafico(app.querySelector("#grafico-arrecadacao"), projetos);
+    if (ok) return;
+    app.querySelector(".grafico").hidden = true;
+    app.querySelector("#dados-tabela").open = true;
+    app.querySelector("#grafico-aviso").innerHTML =
+      '<div class="alert alert--error" role="status"><p>Não foi possível carregar o gráfico. Os mesmos dados estão na tabela abaixo.</p></div>';
+  },
   unmount: destruirGrafico,
 });
 registrarRota("/meus-cadastros", {
@@ -99,10 +106,12 @@ registrarRota("/meus-cadastros", {
   view: () => t.meusCadastros(listarVoluntarios(), listarDoacoes()),
   mount: async (app) => {
     for (const tempo of app.querySelectorAll("time[datetime]")) {
-      tempo.textContent = await formatarData(tempo.getAttribute("datetime"));
+      const texto = await formatarData(tempo.getAttribute("datetime"));
+      if (texto) tempo.textContent = texto;
     }
     for (const celula of app.querySelectorAll("td[data-nascimento]")) {
-      celula.textContent = `${await idadeEmAnos(celula.dataset.nascimento)} anos`;
+      const idade = await idadeEmAnos(celula.dataset.nascimento);
+      if (idade !== null) celula.textContent = `${idade} anos`;
     }
   },
 });
@@ -127,7 +136,7 @@ registerAction("remover", (alvo) => {
   const { tipo, id, nome } = alvo.dataset;
   openModal({
     title: "Remover registro?",
-    body: `<p>Deseja remover o registro de <strong>${nome}</strong>? Esta ação não pode ser desfeita.</p>`,
+    body: `<p>Deseja remover o registro de <strong>${t.escape(nome)}</strong>? Esta ação não pode ser desfeita.</p>`,
     actions: [
       { label: "Cancelar" },
       {

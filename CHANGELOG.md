@@ -3,6 +3,16 @@
 Todas as mudanças relevantes deste projeto são documentadas aqui.
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e versionamento [SemVer](https://semver.org/lang/pt-BR/).
 
+## [1.2.1] - 2026-09-30
+
+### Fixed
+- `escape()` agora também converte aspas simples e duplas, evitando injeção em atributos HTML.
+- O nome do registro exibido no modal de confirmação de remoção é escapado (correção de XSS armazenado).
+- Quando o CDN do jsDelivr está indisponível, a tela Transparência mostra a tabela de dados com um aviso e "Meus cadastros" mantém as datas nativas, em vez de falhar.
+
+### Docs
+- README completo com capturas de tela.
+
 ## [1.2.0] - 2026-09-30
 
 ### Added

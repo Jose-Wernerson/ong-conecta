@@ -7,7 +7,9 @@ export function escape(valor) {
   return String(valor ?? "")
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
 export const brl = (n) => Number(n).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
