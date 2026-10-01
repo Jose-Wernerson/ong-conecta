@@ -1,4 +1,5 @@
 /* templates.js: telas da SPA geradas com Template Literals */
+import { idadeEm } from "./validation.js";
 import { BASE, projetos, formasPagamento, disponibilidades, buscarProjeto } from "./data.js";
 
 /** Escapa HTML de qualquer dado dinâmico antes de inseri-lo em um template. */
@@ -209,7 +210,14 @@ export const transparencia = () => {
     <div class="col-12 col-md-4"><div class="alert"><p><strong>Meta somada</strong><br>${brl(meta)}</p></div></div>
     <div class="col-12 col-md-4"><div class="alert"><p><strong>Voluntários ativos</strong><br>${projetos.reduce((s, p) => s + p.voluntarios, 0)}</p></div></div>
   </div>
-  <div class="table-wrap">
+  <figure class="grafico">
+    <canvas id="grafico-arrecadacao" role="img" aria-label="Gráfico de barras com o valor arrecadado e a meta de cada projeto. Os mesmos dados estão na tabela abaixo."></canvas>
+    <figcaption>Arrecadado e meta por projeto, em reais.</figcaption>
+  </figure>
+  <div id="grafico-aviso"></div>
+  <details id="dados-tabela">
+    <summary>Ver os dados em tabela</summary>
+    <div class="table-wrap">
     <table class="table">
       <caption>Arrecadação por projeto</caption>
       <thead><tr><th scope="col">Projeto</th><th scope="col">Arrecadado</th><th scope="col">Meta</th><th scope="col">Progresso</th></tr></thead>
@@ -222,7 +230,8 @@ export const transparencia = () => {
           .join("")}
       </tbody>
     </table>
-  </div>`;
+    </div>
+  </details>`;
 };
 
 export const naoEncontrado = () => `
@@ -244,7 +253,7 @@ export const meusCadastros = (voluntarios = [], doacoes = []) => `
       voluntarios.length
         ? `<div class="table-wrap"><table class="table">
       <caption class="sr-only">Cadastros de voluntários</caption>
-      <thead><tr><th scope="col">Nome</th><th scope="col">E-mail</th><th scope="col">CPF</th><th scope="col">Projeto</th><th scope="col">Data</th><th scope="col">Ações</th></tr></thead>
+      <thead><tr><th scope="col">Nome</th><th scope="col">E-mail</th><th scope="col">CPF</th><th scope="col">Idade</th><th scope="col">Projeto</th><th scope="col">Data</th><th scope="col">Ações</th></tr></thead>
       <tbody>
         ${voluntarios
           .map(
@@ -252,6 +261,7 @@ export const meusCadastros = (voluntarios = [], doacoes = []) => `
           <th scope="row">${escape(v.nome)}</th>
           <td>${escape(v.email)}</td>
           <td>${escape(mascararCpf(v.cpf))}</td>
+          <td data-nascimento="${escape(v.nascimento)}">${idadeEm(v.nascimento)} anos</td>
           <td>${escape(buscarProjeto(v.projeto)?.titulo ?? v.projeto)}</td>
           <td><time datetime="${escape(v.criadoEm)}">${dataBr(v.criadoEm)}</time></td>
           <td><button type="button" class="btn btn--outline btn--sm" data-action="remover" data-tipo="voluntarios" data-id="${escape(v.id)}" data-nome="${escape(v.nome)}">Remover<span class="sr-only"> ${escape(v.nome)}</span></button></td>

@@ -1,9 +1,10 @@
 /* main.js: ponto de entrada da SPA */
-import { buscarProjeto } from "./data.js";
+import { buscarProjeto, projetos } from "./data.js";
 import * as t from "./templates.js";
 import { iniciarRouter, registrarRota, registrarNaoEncontrada } from "./router.js";
 import { registerAction, openModal, showToast } from "./ui.js";
 import { ligarValidacao, validarFormulario } from "./validation.js";
+import { renderizarGrafico, destruirGrafico, formatarData, idadeEmAnos } from "./charts.js";
 import {
   listarVoluntarios,
   listarDoacoes,
@@ -87,10 +88,23 @@ registrarRota("/doacao", {
   view: (params) => t.doacao(params),
   mount: montarFormulario,
 });
-registrarRota("/transparencia", { titulo: "Transparência", view: t.transparencia });
+registrarRota("/transparencia", {
+  titulo: "Transparência",
+  view: t.transparencia,
+  mount: (app) => renderizarGrafico(app.querySelector("#grafico-arrecadacao"), projetos),
+  unmount: destruirGrafico,
+});
 registrarRota("/meus-cadastros", {
   titulo: "Meus cadastros",
   view: () => t.meusCadastros(listarVoluntarios(), listarDoacoes()),
+  mount: async (app) => {
+    for (const tempo of app.querySelectorAll("time[datetime]")) {
+      tempo.textContent = await formatarData(tempo.getAttribute("datetime"));
+    }
+    for (const celula of app.querySelectorAll("td[data-nascimento]")) {
+      celula.textContent = `${await idadeEmAnos(celula.dataset.nascimento)} anos`;
+    }
+  },
 });
 registrarNaoEncontrada({ titulo: "Página não encontrada", view: t.naoEncontrado });
 
