@@ -6,6 +6,10 @@
   <title>Início | ONG Conecta</title>
   <meta name="description" content="ONG Conecta: divulgue projetos, faça doações e seja voluntário.">
   <link rel="icon" type="image/svg+xml" href="public/imagens/logo/logo-icone.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700&display=swap">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <a class="skip-link" href="#app">Pular para o conteúdo</a>
@@ -37,7 +41,8 @@
 
     <section aria-labelledby="projetos-titulo">
       <h2 id="projetos-titulo">Projetos em destaque</h2>
-      <article class="card">
+      <div class="row">
+      <article class="card col-12 col-md-6 col-lg-4">
         <img src="public/imagens/projetos/educacao-800.webp" srcset="public/imagens/projetos/educacao-480.webp 480w, public/imagens/projetos/educacao-800.webp 800w, public/imagens/projetos/educacao-1200.webp 1200w" sizes="(min-width: 992px) 33vw, 100vw" width="800" height="533" alt="" loading="lazy">
         <div class="card__body">
           <p class="badge">Educação</p>
@@ -46,7 +51,7 @@
           <p>Arrecadado: R$ 13.400,00 de R$ 20.000,00</p>
         </div>
       </article>
-      <article class="card">
+      <article class="card col-12 col-md-6 col-lg-4">
         <img src="public/imagens/projetos/alimentacao-800.webp" srcset="public/imagens/projetos/alimentacao-480.webp 480w, public/imagens/projetos/alimentacao-800.webp 800w, public/imagens/projetos/alimentacao-1200.webp 1200w" sizes="(min-width: 992px) 33vw, 100vw" width="800" height="533" alt="" loading="lazy">
         <div class="card__body">
           <p class="badge">Alimentação</p>
@@ -55,7 +60,7 @@
           <p>Arrecadado: R$ 24.600,00 de R$ 30.000,00</p>
         </div>
       </article>
-      <article class="card">
+      <article class="card col-12 col-md-6 col-lg-4">
         <img src="public/imagens/projetos/saude-800.webp" srcset="public/imagens/projetos/saude-480.webp 480w, public/imagens/projetos/saude-800.webp 800w, public/imagens/projetos/saude-1200.webp 1200w" sizes="(min-width: 992px) 33vw, 100vw" width="800" height="533" alt="" loading="lazy">
         <div class="card__body">
           <p class="badge">Saúde</p>
@@ -64,6 +69,7 @@
           <p>Arrecadado: R$ 6.200,00 de R$ 15.000,00</p>
         </div>
       </article>
+      </div>
     </section>
   </main>
 
