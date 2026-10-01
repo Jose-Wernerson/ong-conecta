@@ -5,10 +5,14 @@ const TITULO_BASE = "ONG Conecta";
 const rotas = new Map();
 let app = null;
 let rotaNaoEncontrada = null;
+let rotaAtual = null;
 
-/** Registra uma rota. `view(params)` devolve HTML; `mount(app, params)` roda após a renderização. */
-export function registrarRota(caminho, { titulo, view, mount }) {
-  rotas.set(caminho, { titulo, view, mount });
+/**
+ * Registra uma rota. `view(params)` devolve HTML; `mount(app, params)` roda após a renderização
+ * e `unmount()` roda antes de a rota ser substituída (libera gráficos, timers, etc.).
+ */
+export function registrarRota(caminho, { titulo, view, mount, unmount }) {
+  rotas.set(caminho, { titulo, view, mount, unmount });
 }
 
 export function registrarNaoEncontrada(config) {
@@ -35,6 +39,8 @@ export async function renderizar({ moverFoco = true } = {}) {
   const { caminho, params } = lerHash();
   const rota = rotas.get(caminho) ?? rotaNaoEncontrada;
 
+  rotaAtual?.unmount?.();
+  rotaAtual = rota;
   app.innerHTML = rota.view(params);
   document.title = `${rota.titulo} | ${TITULO_BASE}`;
   marcarLinkAtivo(rotas.has(caminho) ? caminho : null);
