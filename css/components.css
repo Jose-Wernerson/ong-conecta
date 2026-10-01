@@ -444,3 +444,18 @@ select:user-invalid,
   input,
   select { border: 1px solid CanvasText; }
 }
+
+/* Páginas da SPA */
+.fieldset--inner {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.card .card__body > img { margin-bottom: var(--space-2); }
+
+.table-wrap + .table-wrap { margin-top: var(--space-4); }
+
+.section > h2 { margin-bottom: var(--space-4); }
+
+.noscript-aviso { margin: var(--space-3); }

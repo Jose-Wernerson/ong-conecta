@@ -3,13 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Início | ONG Conecta</title>
+  <title>ONG Conecta</title>
   <meta name="description" content="ONG Conecta: divulgue projetos, faça doações e seja voluntário.">
-  <link rel="icon" type="image/svg+xml" href="public/imagens/logo/logo-icone.svg">
+  <link rel="icon" type="image/svg+xml" href="/imagens/logo/logo-icone.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700&display=swap">
   <script>
+    /* Aplica classe .js e o tema salvo antes da primeira renderização (evita flash) */
     (function () {
       var d = document.documentElement;
       d.classList.add('js');
@@ -20,13 +21,14 @@
     })();
   </script>
   <link rel="stylesheet" href="css/style.css">
-  <script type="module" src="js/ui.js"></script>
+  <script type="module" src="js/main.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#app">Pular para o conteúdo</a>
+
   <header class="site-header">
-    <a class="brand" href="index.html">
-      <img src="public/imagens/logo/logo.svg" width="160" height="40" alt="ONG Conecta">
+    <a class="brand" href="#/">
+      <img src="/imagens/logo/logo.svg" width="160" height="40" alt="ONG Conecta">
     </a>
     <div class="theme-switch" role="group" aria-label="Tema da página">
       <button type="button" class="btn btn--outline btn--sm" data-action="set-theme" data-theme-value="light" aria-pressed="true">Claro</button>
@@ -39,58 +41,27 @@
     </button>
     <nav id="menu-principal" class="nav" aria-label="Menu principal">
       <ul class="menu">
-        <li><a href="index.html" aria-current="page">Início</a></li>
-        <li><a href="html/projetos.html">Projetos</a></li>
+        <li><a href="#/">Início</a></li>
+        <li><a href="#/projetos">Projetos</a></li>
         <li class="has-sub">
-          <a href="html/cadastro.html">Participe</a>
+          <a href="#/cadastro">Participe</a>
           <ul class="submenu">
-            <li><a href="html/cadastro.html">Seja voluntário</a></li>
-            <li><a href="html/doacao.html">Faça uma doação</a></li>
+            <li><a href="#/cadastro">Seja voluntário</a></li>
+            <li><a href="#/doacao">Faça uma doação</a></li>
           </ul>
         </li>
+        <li><a href="#/transparencia">Transparência</a></li>
       </ul>
     </nav>
   </header>
 
   <main id="app" tabindex="-1">
-    <section class="hero" aria-labelledby="hero-titulo">
-      <h1 id="hero-titulo">Conectamos quem quer ajudar a quem precisa</h1>
-      <p>A ONG Conecta divulga projetos sociais, capta doações e reúne voluntários para transformar comunidades.</p>
-      <p><a class="btn" href="html/cadastro.html">Quero ser voluntário</a> <a class="btn btn--outline" href="html/doacao.html">Fazer uma doação</a></p>
-    </section>
-
-    <section aria-labelledby="projetos-titulo">
-      <h2 id="projetos-titulo">Projetos em destaque</h2>
-      <div class="row">
-      <article class="card col-12 col-md-6 col-lg-4">
-        <img src="public/imagens/projetos/educacao-800.webp" srcset="public/imagens/projetos/educacao-480.webp 480w, public/imagens/projetos/educacao-800.webp 800w, public/imagens/projetos/educacao-1200.webp 1200w" sizes="(min-width: 992px) 33vw, 100vw" width="800" height="533" alt="" loading="lazy">
-        <div class="card__body">
-          <p class="badge">Educação</p>
-          <h3>Semear Saber</h3>
-          <p>Reforço escolar, leitura e informática para crianças e jovens de segunda a sexta.</p>
-          <p>Arrecadado: R$ 13.400,00 de R$ 20.000,00</p>
-        </div>
-      </article>
-      <article class="card col-12 col-md-6 col-lg-4">
-        <img src="public/imagens/projetos/alimentacao-800.webp" srcset="public/imagens/projetos/alimentacao-480.webp 480w, public/imagens/projetos/alimentacao-800.webp 800w, public/imagens/projetos/alimentacao-1200.webp 1200w" sizes="(min-width: 992px) 33vw, 100vw" width="800" height="533" alt="" loading="lazy">
-        <div class="card__body">
-          <p class="badge">Alimentação</p>
-          <h3>Mesa Cheia</h3>
-          <p>Cestas básicas e refeições semanais para famílias em situação de vulnerabilidade.</p>
-          <p>Arrecadado: R$ 24.600,00 de R$ 30.000,00</p>
-        </div>
-      </article>
-      <article class="card col-12 col-md-6 col-lg-4">
-        <img src="public/imagens/projetos/saude-800.webp" srcset="public/imagens/projetos/saude-480.webp 480w, public/imagens/projetos/saude-800.webp 800w, public/imagens/projetos/saude-1200.webp 1200w" sizes="(min-width: 992px) 33vw, 100vw" width="800" height="533" alt="" loading="lazy">
-        <div class="card__body">
-          <p class="badge">Saúde</p>
-          <h3>Saúde na Praça</h3>
-          <p>Mutirões de atendimento, vacinação e orientação preventiva nos bairros atendidos.</p>
-          <p>Arrecadado: R$ 6.200,00 de R$ 15.000,00</p>
-        </div>
-      </article>
+    <noscript>
+      <div class="alert alert--error noscript-aviso">
+        <p>Esta aplicação precisa de JavaScript. Use as <a href="html/projetos.html">páginas simples de projetos</a>,
+          <a href="html/cadastro.html">cadastro</a> e <a href="html/doacao.html">doação</a>.</p>
       </div>
-    </section>
+    </noscript>
   </main>
 
   <footer class="site-footer">
