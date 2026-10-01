@@ -123,10 +123,17 @@ export const listaProjetos = () => `
   <p>Conheça as frentes de atuação da ONG e escolha onde sua ajuda faz mais diferença.</p>
   <div class="row">${projetos.map((p) => cardProjeto(p, 2)).join("")}</div>`;
 
-export const cadastro = (valores = {}) => `
+export const cadastro = (valores = {}, temRascunho = false) => `
   <h1 tabindex="-1">Seja voluntário</h1>
   <p>Preencha os dados abaixo para entrar no time de voluntários.</p>
-  <form id="form-cadastro" data-form="cadastro" action="#" method="post" data-demo="Cadastro recebido! (demonstração)">
+  ${
+    temRascunho
+      ? `<div class="alert" role="status">
+          <p>Recuperamos o rascunho do seu cadastro. <button type="button" class="btn btn--outline btn--sm" data-action="descartar-rascunho">Descartar rascunho</button></p>
+        </div>`
+      : ""
+  }
+  <form id="form-cadastro" data-form="cadastro" action="#" method="post" novalidate>
     <fieldset>
       <legend>Dados pessoais</legend>
       ${campo({ id: "nome", rotulo: "Nome completo", regras: "obrigatorio", extra: 'required autocomplete="name"', valor: valores.nome })}
@@ -164,7 +171,7 @@ export const cadastro = (valores = {}) => `
 export const doacao = (params = {}) => `
   <h1 tabindex="-1">Faça uma doação</h1>
   <p>Qualquer valor ajuda. Doação mínima de R$ 5,00.</p>
-  <form id="form-doacao" data-form="doacao" action="#" method="post" data-demo="Doação recebida! Obrigado. (demonstração)">
+  <form id="form-doacao" data-form="doacao" action="#" method="post" novalidate>
     <fieldset>
       <legend>Dados da doação</legend>
       ${campo({ id: "nome", rotulo: "Nome", regras: "obrigatorio", extra: 'required autocomplete="name"' })}
@@ -222,3 +229,63 @@ export const naoEncontrado = () => `
   <h1 tabindex="-1">Página não encontrada</h1>
   <div class="alert alert--error" role="alert"><p>O endereço que você abriu não existe nesta aplicação.</p></div>
   <p><a class="btn" href="#/">Voltar para o início</a></p>`;
+
+const dataBr = (iso) => new Date(iso).toLocaleDateString("pt-BR");
+
+const mascararCpf = (cpf) => (cpf ? `***.***.${String(cpf).slice(8)}` : "");
+
+export const meusCadastros = (voluntarios = [], doacoes = []) => `
+  <h1 tabindex="-1">Meus cadastros</h1>
+  <p>Registros salvos neste navegador (localStorage). Nenhum dado é enviado a servidores.</p>
+
+  <section class="section" aria-labelledby="titulo-voluntarios">
+    <h2 id="titulo-voluntarios">Voluntários (${voluntarios.length})</h2>
+    ${
+      voluntarios.length
+        ? `<div class="table-wrap"><table class="table">
+      <caption class="sr-only">Cadastros de voluntários</caption>
+      <thead><tr><th scope="col">Nome</th><th scope="col">E-mail</th><th scope="col">CPF</th><th scope="col">Projeto</th><th scope="col">Data</th><th scope="col">Ações</th></tr></thead>
+      <tbody>
+        ${voluntarios
+          .map(
+            (v) => `<tr>
+          <th scope="row">${escape(v.nome)}</th>
+          <td>${escape(v.email)}</td>
+          <td>${escape(mascararCpf(v.cpf))}</td>
+          <td>${escape(buscarProjeto(v.projeto)?.titulo ?? v.projeto)}</td>
+          <td><time datetime="${escape(v.criadoEm)}">${dataBr(v.criadoEm)}</time></td>
+          <td><button type="button" class="btn btn--outline btn--sm" data-action="remover" data-tipo="voluntarios" data-id="${escape(v.id)}" data-nome="${escape(v.nome)}">Remover<span class="sr-only"> ${escape(v.nome)}</span></button></td>
+        </tr>`
+          )
+          .join("")}
+      </tbody>
+    </table></div>`
+        : '<div class="alert"><p>Nenhum voluntário cadastrado ainda. <a href="#/cadastro">Faça o primeiro cadastro</a>.</p></div>'
+    }
+  </section>
+
+  <section class="section" aria-labelledby="titulo-doacoes">
+    <h2 id="titulo-doacoes">Doações (${doacoes.length})</h2>
+    ${
+      doacoes.length
+        ? `<div class="table-wrap"><table class="table">
+      <caption class="sr-only">Doações registradas</caption>
+      <thead><tr><th scope="col">Doador</th><th scope="col">Valor</th><th scope="col">Projeto</th><th scope="col">Pagamento</th><th scope="col">Data</th><th scope="col">Ações</th></tr></thead>
+      <tbody>
+        ${doacoes
+          .map(
+            (d) => `<tr>
+          <th scope="row">${escape(d.nome)}</th>
+          <td>${brl(d.valor)}</td>
+          <td>${escape(buscarProjeto(d.projeto)?.titulo ?? d.projeto)}</td>
+          <td>${escape(d.pagamento)}</td>
+          <td><time datetime="${escape(d.criadoEm)}">${dataBr(d.criadoEm)}</time></td>
+          <td><button type="button" class="btn btn--outline btn--sm" data-action="remover" data-tipo="doacoes" data-id="${escape(d.id)}" data-nome="${escape(d.nome)}">Remover<span class="sr-only"> doação de ${escape(d.nome)}</span></button></td>
+        </tr>`
+          )
+          .join("")}
+      </tbody>
+    </table></div>`
+        : '<div class="alert"><p>Nenhuma doação registrada ainda. <a href="#/doacao">Faça uma doação</a>.</p></div>'
+    }
+  </section>`;
