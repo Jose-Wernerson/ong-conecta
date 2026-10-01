@@ -31,12 +31,17 @@ function aoEnviar(e) {
   const form = e.target.closest("form[data-form]");
   if (!form) return;
   e.preventDefault();
+  if (form.dataset.enviando) return;
 
   const { valido } = validarFormulario(form);
   if (!valido) {
     showToast("Corrija os campos destacados antes de enviar.", "error");
     return;
   }
+
+  form.dataset.enviando = "true";
+  const botao = form.querySelector('button[type="submit"]');
+  botao.disabled = true;
 
   const dados = coletarDados(form);
   if (form.dataset.form === "cadastro") {
@@ -47,12 +52,14 @@ function aoEnviar(e) {
   }
   form.reset();
   form.querySelectorAll("[data-tocado]").forEach((campo) => delete campo.dataset.tocado);
+
+  setTimeout(() => {
+    delete form.dataset.enviando;
+    botao.disabled = false;
+  }, 800);
 }
 
 function montarFormulario(app) {
-  ligarValidacao(app);
-  app.addEventListener("submit", (e) => aoEnviar(e));
-
   const cadastro = app.querySelector("#form-cadastro");
   if (cadastro) {
     let temporizador;
@@ -127,4 +134,9 @@ registerAction("descartar-rascunho", () => {
   window.dispatchEvent(new CustomEvent("dados:alterados"));
 });
 
-iniciarRouter(document.getElementById("app"));
+/* Delegação: os listeners ficam no #app (que nunca é recriado) e são ligados uma única vez */
+const app = document.getElementById("app");
+ligarValidacao(app);
+app.addEventListener("submit", aoEnviar);
+
+iniciarRouter(app);
