@@ -1,0 +1,148 @@
+/* Design tokens: cores, tipografia, espaçamentos e temas */
+:root {
+  /* Paleta */
+  --primary: #1a6b4f;
+  --primary-light: #2e9e73;
+  --primary-dark: #0f4a36;
+  --secondary: #e07a2e;
+  --accent: #2b6cb0;
+  --neutral-900: #1f2933;
+  --neutral-600: #52606d;
+  --neutral-300: #cbd2d9;
+  --neutral-100: #f5f7fa;
+  --white: #ffffff;
+  --success: #2f855a;
+  --error: #c53030;
+
+  /* Tipografia (escala 1.25) */
+  --fs-xs: 0.8rem;
+  --fs-base: 1rem;
+  --fs-md: 1.25rem;
+  --fs-lg: 1.563rem;
+  --fs-xl: 1.953rem;
+  --fs-2xl: 2.441rem;
+  --font-heading: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --line-height: 1.6;
+
+  /* Espaçamentos (base 8px) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 32px;
+  --space-6: 48px;
+  --space-7: 64px;
+
+  --radius: 8px;
+  --shadow: 0 2px 8px rgb(0 0 0 / 12%);
+
+  /* Tokens semânticos (tema claro) */
+  --bg: var(--white);
+  --surface: var(--white);
+  --surface-alt: var(--neutral-100);
+  --text: var(--neutral-900);
+  --text-muted: var(--neutral-600);
+  --border: var(--neutral-300);
+  --link: var(--primary-dark);
+  --brand: var(--primary);
+  --brand-hover: var(--primary-dark);
+  --on-brand: var(--white);
+  --focus: var(--accent);
+  --error-text: var(--error);
+  --success-text: var(--success);
+}
+
+/* Tema escuro escolhido pelo usuário */
+[data-theme="dark"] {
+  --primary: #4cc79a;
+  --bg: #121a17;
+  --surface: #1b2622;
+  --surface-alt: #16201c;
+  --text: #e6edea;
+  --text-muted: #a9b8b2;
+  --border: #30403a;
+  --link: #4cc79a;
+  --brand: #4cc79a;
+  --brand-hover: #7ddfb8;
+  --on-brand: #0b1411;
+  --focus: #7fb4ff;
+  --error-text: #ff8a80;
+  --success-text: #6fd3a0;
+}
+
+/* Tema de alto contraste escolhido pelo usuário */
+[data-theme="contrast"] {
+  --primary: #ffd600;
+  --bg: #000000;
+  --surface: #000000;
+  --surface-alt: #000000;
+  --text: #ffffff;
+  --text-muted: #ffffff;
+  --border: #ffffff;
+  --link: #ffd600;
+  --brand: #ffd600;
+  --brand-hover: #ffffff;
+  --on-brand: #000000;
+  --focus: #ffd600;
+  --error-text: #ff8a8a;
+  --success-text: #7cffb0;
+}
+
+/* Sem escolha explícita: respeita as preferências do sistema */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --primary: #4cc79a;
+    --bg: #121a17;
+    --surface: #1b2622;
+    --surface-alt: #16201c;
+    --text: #e6edea;
+    --text-muted: #a9b8b2;
+    --border: #30403a;
+    --link: #4cc79a;
+    --brand: #4cc79a;
+    --brand-hover: #7ddfb8;
+    --on-brand: #0b1411;
+    --focus: #7fb4ff;
+    --error-text: #ff8a80;
+    --success-text: #6fd3a0;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :root:not([data-theme]) {
+    --primary: #ffd600;
+    --bg: #000000;
+    --surface: #000000;
+    --surface-alt: #000000;
+    --text: #ffffff;
+    --text-muted: #ffffff;
+    --border: #ffffff;
+    --link: #ffd600;
+    --brand: #ffd600;
+    --brand-hover: #ffffff;
+    --on-brand: #000000;
+    --focus: #ffd600;
+    --error-text: #ff8a8a;
+    --success-text: #7cffb0;
+  }
+}
+
+/* Modo de cores forçadas (Windows Alto Contraste): usa cores do sistema */
+@media (forced-colors: active) {
+  :root {
+    --bg: Canvas;
+    --surface: Canvas;
+    --surface-alt: Canvas;
+    --text: CanvasText;
+    --text-muted: CanvasText;
+    --border: CanvasText;
+    --link: LinkText;
+    --brand: ButtonText;
+    --brand-hover: Highlight;
+    --on-brand: ButtonFace;
+    --focus: Highlight;
+    --error-text: CanvasText;
+    --success-text: CanvasText;
+  }
+}
