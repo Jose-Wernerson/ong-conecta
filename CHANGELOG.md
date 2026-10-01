@@ -3,6 +3,17 @@
 Todas as mudanças relevantes deste projeto são documentadas aqui.
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e versionamento [SemVer](https://semver.org/lang/pt-BR/).
 
+## [1.2.0] - 2026-09-30
+
+### Added
+- `js/charts.js`: Chart.js carregado com `await import()` do jsDelivr, gráfico de barras na tela Transparência e `destroy()` antes de recriar.
+- Day.js em português (pt-br) para formatar datas e calcular a idade em "Meus cadastros".
+- Gancho `unmount` no roteador para liberar recursos ao sair de uma rota.
+- Tabela de dados dentro de `<details>` ao lado do gráfico.
+
+### Fixed
+- Logo recortado no cabeçalho (viewBox ampliado).
+
 ## [1.1.1] - 2026-09-30
 
 ### Fixed
