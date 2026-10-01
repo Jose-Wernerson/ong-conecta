@@ -3,6 +3,18 @@
 Todas as mudanças relevantes deste projeto são documentadas aqui.
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e versionamento [SemVer](https://semver.org/lang/pt-BR/).
 
+## [1.0.0] - 2026-09-30
+
+### Changed
+- **BREAKING:** `index.html` virou um app shell; o conteúdo é renderizado por `js/main.js` e a navegação usa rotas por hash (`#/`, `#/projetos`, `#/cadastro`, `#/doacao`, `#/transparencia`, 404).
+
+### Added
+- Roteador (`js/router.js`) que atualiza `document.title`, move o foco para o `<h1>`, marca `aria-current` e fecha o menu mobile.
+- Templates com Template Literals e função `escape()` (`js/templates.js`) e dados dos projetos (`js/data.js`).
+- Vite, ESLint e scripts `dev`, `build`, `preview` e `lint`.
+- Workflows de CI e de deploy no GitHub Pages e template de pull request.
+- Páginas de fallback sem JavaScript mantidas em `html/`.
+
 ## [0.3.0] - 2026-09-30
 
 ### Added
