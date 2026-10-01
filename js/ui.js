@@ -1,7 +1,7 @@
 /* ui.js: interações de interface (menu, tema, toasts e modal) */
+import { salvarPreferencias } from "./storage.js";
 
 const html = document.documentElement;
-const PREF_KEY = "ong:preferencias";
 const FOCUSABLE =
   'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
@@ -24,12 +24,7 @@ function sincronizarBotoesTema() {
 
 export function setTheme(valor) {
   html.setAttribute("data-theme", valor);
-  try {
-    const prefs = JSON.parse(localStorage.getItem(PREF_KEY) || "{}");
-    localStorage.setItem(PREF_KEY, JSON.stringify({ ...prefs, tema: valor }));
-  } catch {
-    /* localStorage indisponível: o tema vale só nesta sessão */
-  }
+  salvarPreferencias({ tema: valor });
   sincronizarBotoesTema();
 }
 
@@ -176,11 +171,18 @@ function onSubmitDemo(e) {
   form.reset();
 }
 
+function onDoacaoSalva(e) {
+  const valor = Number(e.detail.valor).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+  showToast(`Obrigado! Sua doação de ${valor} foi registrada.`);
+}
+
 export function initUI() {
   sincronizarBotoesTema();
   document.addEventListener("click", onClick);
   document.addEventListener("keydown", onKeydown);
   document.addEventListener("submit", onSubmitDemo);
+  window.addEventListener("doacao:salva", onDoacaoSalva);
+  window.addEventListener("voluntario:salvo", () => showToast("Cadastro salvo! Em breve entraremos em contato."));
 }
 
 initUI();
