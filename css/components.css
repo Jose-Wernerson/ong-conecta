@@ -1,0 +1,174 @@
+/* Componentes: botões, cards, badges, progresso, hero e tabelas */
+
+/* Botões */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  font: 600 var(--fs-base) / 1.4 var(--font-body);
+  color: var(--on-brand);
+  background: var(--brand);
+  border: 2px solid var(--brand);
+  border-radius: var(--radius);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s, transform 0.1s;
+}
+
+.btn:hover {
+  background: var(--brand-hover);
+  border-color: var(--brand-hover);
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.btn:active { transform: translateY(1px); }
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn--outline {
+  color: var(--brand);
+  background: transparent;
+}
+
+.btn--outline:hover {
+  color: var(--on-brand);
+  background: var(--brand-hover);
+}
+
+.btn--danger {
+  color: var(--white);
+  background: var(--error);
+  border-color: var(--error);
+}
+
+.btn--sm {
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--fs-xs);
+}
+
+/* Badges */
+.badge {
+  display: inline-block;
+  margin: 0 0 var(--space-2);
+  padding: 2px var(--space-2);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--neutral-900);
+  background: var(--secondary);
+  border-radius: 999px;
+}
+
+.badge--success {
+  color: var(--white);
+  background: var(--success);
+}
+
+/* Cards: flex em coluna, rodapé empurrado para baixo com margin-top:auto */
+.card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.card__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: var(--space-3) var(--space-4);
+}
+
+.card__footer {
+  margin-top: auto;
+  padding-top: var(--space-3);
+}
+
+/* Barra de progresso */
+.progress {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+  font-size: var(--fs-xs);
+}
+
+.progress__track {
+  flex: 1;
+  height: 0.75rem;
+  overflow: hidden;
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+
+.progress__bar {
+  height: 100%;
+  width: var(--value, 0%);
+  background: var(--brand);
+}
+
+/* Hero */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+  padding: var(--space-6) var(--space-4);
+  background: var(--surface-alt);
+  border-radius: var(--radius);
+}
+
+.hero h1 { max-width: 20ch; }
+.hero p { max-width: 60ch; }
+
+/* Tabelas */
+.table-wrap { overflow-x: auto; }
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: var(--space-2) var(--space-3);
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.table caption {
+  padding-bottom: var(--space-2);
+  text-align: left;
+  font-weight: 600;
+}
+
+@media (forced-colors: active) {
+  .btn,
+  .card,
+  .badge,
+  .progress__track { border: 1px solid CanvasText; }
+
+  .progress__bar { background: Highlight; forced-color-adjust: none; }
+}
