@@ -127,7 +127,7 @@ registerAction("remover", (alvo) => {
   const { tipo, id, nome } = alvo.dataset;
   openModal({
     title: "Remover registro?",
-    body: `<p>Deseja remover o registro de <strong>${nome}</strong>? Esta ação não pode ser desfeita.</p>`,
+    body: `<p>Deseja remover o registro de <strong>${t.escape(nome)}</strong>? Esta ação não pode ser desfeita.</p>`,
     actions: [
       { label: "Cancelar" },
       {
